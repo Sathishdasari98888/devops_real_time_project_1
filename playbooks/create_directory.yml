@@ -1,18 +1,21 @@
 ---
-- hosts: all
+- name: CREATE DIRECTORY & COPY FILES
+  hosts: all
   become: yes
-  vars_files:
-    - vault.yml
-
   tasks:
     - name: CREATE DOCKER DIRECTORY
       file:
         path: /opt/docker
         state: directory
-        mode: '0755'
+        mode: "0755"      
 
     - name: COPY DOCKERFILE
       copy:
-        src: /path/to/your/Dockerfile
-        dest: /opt/docker/Dockerfile
+        src: ../Dockerfile
+        dest: /opt/docker
+
+    - name: COPY WAR FILE
+      copy:
+        src: ../webapp/target/webapp.war
+        dest: /opt/docker
       become: yes
